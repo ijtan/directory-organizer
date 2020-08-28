@@ -1,17 +1,18 @@
 #should be quite a simple program thus one class should suffice
 import os,sys,shutil
 from pathlib import Path
-downloadsPath = Path("D:\Downloads")
+downloadsPath = Path("D:/Downloads/test")
 
 docs = ['.pdf','.docx','.doc','.pptx','.ppt','.pps','.odp','.rtf'] 
 data = ['.csv','.txt','.json','.yaml','.xlsx','.xls','.xlsm','.sql','.html','.data','.xml','.cfg']
 media = ['.png','.jpg','.mp3','.mp4','.m4v','.mkv','.swf','.flv','.avi','.gif','.wav','.bmp','.jpeg','.ico','.ps','.psd','.svg']
-archives = ['.zip','.tar.xz','.rar','.7z','.iso'] 
-executables = ['.exe','.msi','.jar','.py','.js','.bat','.c','.cpp','h'] 
-torrents = ['.torrent']
+archives = ['.zip','.xz','.rar','.7z','.iso'] 
+executables = ['.exe', '.msi', '.jar', '.py',
+               '.js', '.bat', '.c', '.cpp', '.h', '.torrent']
 
-structure = ['Documents','Data','Media','Archives','Executables','Other','Torrents']
-ignore = []
+
+structure = ['Documents','Data','Media','Archives','Executables','Other']
+ignore = ['Torrents']#whole file -> name+ext
 def createFolders():
     os.chdir(downloadsPath)
     for fold in structure:
@@ -36,8 +37,6 @@ def sort():
             shutil.move(file, downloadsPath / 'Archives')
         elif file_extension in executables:
             shutil.move(file, downloadsPath / 'Executables')
-        elif file_extension in torrents:
-            shutil.move(file,  downloadsPath / 'Torrents')
         else:
             shutil.move(file,  downloadsPath / 'Other')
     os.chdir(cwd)
@@ -46,4 +45,10 @@ def needsSorting():
     dirCount = len([dir for dir in os.listdir(downloadsPath) if dir not in ignore])
     itemCount = len(structure)
     return (True if dirCount > itemCount else False)
-print("hellow")
+
+
+if needsSorting():
+    createFolders()
+    sort()
+else:
+    print("no sorting needed")
