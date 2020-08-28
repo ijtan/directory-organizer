@@ -1,7 +1,13 @@
 #should be quite a simple program thus one class should suffice
 import os,sys,shutil
 from pathlib import Path
-downloadsPath = Path("D:/Downloads/test")
+import argparse
+
+
+parser = argparse.ArgumentParser(description="Directory Sorter")
+parser.add_argument("--dir")
+args, leftovers = parser.parse_known_args()
+
 
 docs = ['.pdf','.docx','.doc','.pptx','.ppt','.pps','.odp','.rtf'] 
 data = ['.csv','.txt','.json','.yaml','.xlsx','.xls','.xlsm','.sql','.html','.data','.xml','.cfg']
@@ -10,17 +16,17 @@ archives = ['.zip','.xz','.rar','.7z','.iso']
 executables = ['.exe', '.msi', '.jar', '.py',
                '.js', '.bat', '.c', '.cpp', '.h', '.torrent']
 
-
 structure = ['Documents','Data','Media','Archives','Executables','Other']
 ignore = ['Torrents']#whole file -> name+ext
+
 def createFolders():
-    os.chdir(downloadsPath)
+    os.chdir(sortingPath)
     for fold in structure:
         os.makedirs(fold, exist_ok=True)
 def sort():
     cwd = os.getcwd()
-    os.chdir(downloadsPath)
-    for file in os.listdir(downloadsPath):
+    os.chdir(sortingPath)
+    for file in os.listdir(sortingPath):
         print(f'Processing: {file}')
         filename, file_extension = os.path.splitext(file)
         if filename in structure and file_extension == "":
@@ -28,27 +34,38 @@ def sort():
         elif file in ignore:
             continue
         elif file_extension in docs:
-            shutil.move(file, downloadsPath / 'Documents' )
+            shutil.move(file, sortingPath / 'Documents' )
         elif file_extension in data:
-            shutil.move(file,  downloadsPath / 'Data')
+            shutil.move(file,  sortingPath / 'Data')
         elif file_extension in media:
-            shutil.move(file, downloadsPath / 'Media')
+            shutil.move(file, sortingPath / 'Media')
         elif file_extension in archives:
-            shutil.move(file, downloadsPath / 'Archives')
+            shutil.move(file, sortingPath / 'Archives')
         elif file_extension in executables:
-            shutil.move(file, downloadsPath / 'Executables')
+            shutil.move(file, sortingPath / 'Executables')
         else:
-            shutil.move(file,  downloadsPath / 'Other')
+            shutil.move(file,  sortingPath / 'Other')
     os.chdir(cwd)
 
 def needsSorting():
-    dirCount = len([dir for dir in os.listdir(downloadsPath) if dir not in ignore])
+    dirCount = len([dir for dir in os.listdir(sortingPath) if dir not in ignore])
     itemCount = len(structure)
     return (True if dirCount > itemCount else False)
 
+def checkPath():
+    if sortingPath.exists():
+        print(f"Sorting Directory: '{sortingPath}'")
+    else:
+        print("Download Path specified does not exist!")
+        exit()
 
-if needsSorting():
-    createFolders()
-    sort()
-else:
-    print("no sorting needed")
+
+sortingPath = (Path("test") if args.dir is None else args.dir)
+def run():
+    checkPath()        
+    if needsSorting():
+        createFolders()
+        sort()
+    else:
+        print("no sorting needed")
+run()
