@@ -68,4 +68,6 @@ def run():
         sort()
     else:
         print("no sorting needed")
+    
 run()
+
