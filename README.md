@@ -3,7 +3,7 @@ A python script which automatically organizes and classifies files & folders fro
 
 ## Running the script
 ```
-* git clone https://github.com/EthanZammit/donloads-folder-organizer
-* cd donloads-folder-organizer
-* python main.py --dir <Path to directory>
+git clone https://github.com/EthanZammit/donloads-folder-organizer
+cd donloads-folder-organizer
+python main.py --dir <Path to directory>
 ```
