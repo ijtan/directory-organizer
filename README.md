@@ -10,7 +10,7 @@
 ## Running the script
 ```
 git clone https://github.com/ijtan/directory-organizer
-cd donloads-folder-organizer
+cd directory-organizer
 python main.py --dir <Path to directory>
 ```
 ## Additional Comments
