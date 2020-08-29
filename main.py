@@ -53,14 +53,14 @@ def needsSorting():
     return (True if dirCount > itemCount else False)
 
 def checkPath():
-    if sortingPath.exists():
+    if sortingPath.is_dir():
         print(f"Sorting Directory: '{sortingPath}'")
     else:
         print("Download Path specified does not exist!")
         exit()
 
 
-sortingPath = (Path("test") if args.dir is None else args.dir)
+sortingPath = (Path("test") if args.dir is None else Path(args.dir))
 def run():
     checkPath()        
     if needsSorting():
