@@ -7,7 +7,7 @@ Make sure that the premade directories are applicable and that the file extensio
 ```
 git clone https://github.com/ijtan/donloads-folder-organizer
 cd donloads-folder-organizer
-python main.py --dir ** <Path to directory> **
+python main.py --dir *<Path to directory>*
 ```
 ## Additional Comments
 If no directory is given the script automatically assumes you are trying to sort the test directory
