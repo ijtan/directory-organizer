@@ -5,7 +5,7 @@ Make sure that the premade directories are applicable and that the file extensio
 
 ## Running the script
 ```
-git clone https://github.com/ijtan/donloads-folder-organizer
+git clone https://github.com/ijtan/directory-organizer
 cd donloads-folder-organizer
 python main.py --dir <Path to directory>
 ```
