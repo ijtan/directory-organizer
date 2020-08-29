@@ -1,7 +1,10 @@
 # Directory Organizer
-A python script which automatically organizes and classifies files & folders from a directory (created for downloads folder, but any valid directory can be specified)
+-A very simple python script which automatically organizes and classifies files & folders from a directory 
+This script was originally created to organize the downloads folder, but any valid directory can be specified
 
-Make sure that the premade directories are applicable and that the file extensions you regulary use are set
+-Only tested on windows
+
+-Make sure that the premade directories are applicable and that the file extensions you regulary use are set
 
 ## Running the script
 ```
