@@ -3,7 +3,7 @@
 
 -This script was originally created to organize the downloads folder, but any valid directory can be specified
 
--Only tested on windows
+-UPDATE: Works on Linux and Windows (given the correct path is specified)
 
 -Make sure that the premade directories are applicable and that the file extensions you regulary use are set
 
