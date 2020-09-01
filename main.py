@@ -11,13 +11,14 @@ args, leftovers = parser.parse_known_args()
 
 docs = ['.pdf','.docx','.doc','.pptx','.ppt','.pps','.odp','.rtf'] 
 data = ['.csv','.txt','.json','.yaml','.xlsx','.xls','.xlsm','.sql','.html','.data','.xml','.cfg']
-media = ['.png','.jpg','.mp3','.mp4','.m4v','.mkv','.swf','.flv','.avi','.gif','.wav','.bmp','.jpeg','.ico','.ps','.psd','.svg']
+media = ['.png','.jpg','.mp3','.mp4','.m4v','.mkv','.swf','.flv','.avi','.gif','.wav','.webm','.bmp','.jpeg','.ico','.ps','.psd','.svg']
 archives = ['.zip','.xz','.rar','.7z','.iso'] 
 executables = ['.exe', '.msi', '.jar', '.py',
                '.js', '.bat', '.c', '.cpp', '.h', '.torrent']
 
 structure = ['Documents','Data','Media','Archives','Executables','Other']
 ignore = ['Torrents']#whole file -> name+ext
+ignoreExt = ['.crdownload','.tmp']
 
 def createFolders():
     os.chdir(sortingPath)
@@ -31,7 +32,7 @@ def sort():
         filename, file_extension = os.path.splitext(file)
         if filename in structure and file_extension == "":
             continue
-        elif file in ignore:
+        elif file in ignore or file_extension in ignoreExt:
             continue
         elif file_extension in docs:
             shutil.move(file, sortingPath / 'Documents' )
