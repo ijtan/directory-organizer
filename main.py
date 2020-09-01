@@ -18,7 +18,7 @@ executables = ['.exe', '.msi', '.jar', '.py',
 
 structure = ['Documents','Data','Media','Archives','Executables','Other']
 ignore = ['Torrents']#whole file -> name+ext
-ignoreExt = ['.crdownload','.tmp']
+ignoreExt = ['.crdownload','.tmp'] # extensions to ignore
 
 def createFolders():
     os.chdir(sortingPath)
