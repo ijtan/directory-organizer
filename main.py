@@ -2,6 +2,9 @@
 import os,sys,shutil
 from pathlib import Path
 import argparse
+import subprocess
+from time import sleep
+
 
 
 parser = argparse.ArgumentParser(description="Directory Sorter")
@@ -10,21 +13,25 @@ args, leftovers = parser.parse_known_args()
 
 
 docs = ['.pdf','.docx','.doc','.pptx','.ppt','.pps','.odp','.rtf'] 
-data = ['.csv','.txt','.json','.yaml','.xlsx','.xls','.xlsm','.sql','.html','.data','.xml','.cfg']
+data = ['.csv','.txt','.json','.yaml','.xlsx','.xls','.xlsm','.sql','.html','.data','.xml','.cfg', '.log']
 media = ['.png','.jpg','.mp3','.mp4','.m4v','.mkv','.swf','.flv','.avi','.gif','.wav','.webm','.bmp','.jpeg','.ico','.ps','.psd','.svg']
-archives = ['.zip','.xz','.rar','.7z','.iso'] 
-executables = ['.exe', '.msi', '.jar', '.py',
-               '.js', '.bat', '.c', '.cpp', '.h', '.torrent']
+archives = ['.zip', '.xz', '.rar', '.7z', '.iso', '.tar']
+executables = ['.exe', '.msi', '.jar', '.bat', '.torrent', '.apk', '.bin']
+code = ['.ipynb', '.py', '.js', '.c', '.cpp', '.h','.lua', '.class', '.java', '.php', '.vb', '.html', '.css', '.svelte']
 
-structure = ['Documents','Data','Media','Archives','Executables','Other']
+structure = ['Documents','Data','Media','Archives','Executables','Coding','Other']
 ignore = ['Torrents']#whole file -> name+ext
-ignoreExt = ['.crdownload','.tmp'] # extensions to ignore
+ignoreExt = ['.crdownload','.tmp','.opdownload'] # extensions to ignore
+loc = ""
 
 def createFolders():
     os.chdir(sortingPath)
     for fold in structure:
         os.makedirs(fold, exist_ok=True)
+
 def sort():
+    global loc
+    global movedTo
     cwd = os.getcwd()
     os.chdir(sortingPath)
     for file in os.listdir(sortingPath):
@@ -35,17 +42,44 @@ def sort():
         elif file in ignore or file_extension in ignoreExt:
             continue
         elif file_extension in docs:
-            shutil.move(file, sortingPath / 'Documents' )
+            dest  = sortingPath / 'Documents';
         elif file_extension in data:
-            shutil.move(file,  sortingPath / 'Data')
+           dest =   sortingPath / 'Data'
         elif file_extension in media:
-            shutil.move(file, sortingPath / 'Media')
+            dest = sortingPath / 'Media'
         elif file_extension in archives:
-            shutil.move(file, sortingPath / 'Archives')
+            dest = sortingPath / 'Archives'
         elif file_extension in executables:
-            shutil.move(file, sortingPath / 'Executables')
+            dest = sortingPath / 'Executables'
+        elif file_extension in code:
+            dest = sortingPath / 'Coding'
         else:
-            shutil.move(file,  sortingPath / 'Other')
+            dest =  sortingPath / 'Other'
+
+        if os.path.exists(dest) and os.path.isdir(dest):  # if folder exists
+            
+            i = 0
+            new_name = filename + file_extension
+            while os.path.exists(dest / new_name):
+                new_name = filename + "_" + str(i) + file_extension
+                i+=1
+            os.rename(file, new_name)
+            file = new_name
+        shutil.move(file, dest)
+        # movedTo = dest
+        # print(f'set movedto to: {movedTo}')
+        print('os name is:',os.name)
+        if(os.name == 'nt'):
+            # print('nt')
+            # if movedTo != "":
+                # print('opening: ',end=' ')
+            loc = str(dest).rsplit(',', 1)[-1]+'\\'
+            print('opening loc:', loc)
+            os.startfile(loc)
+            # print(['explorer /select,"'+loc+'\\"'])
+            # subprocess.Popen(['explorer /select,"'+loc+'\\"'])
+                # sleep(5)
+        
     os.chdir(cwd)
 
 def needsSorting():
@@ -66,9 +100,35 @@ def run():
     checkPath()        
     if needsSorting():
         createFolders()
+        print('sorting')
         sort()
     else:
         print("no sorting needed")
-    
+
+def open_path():
+    global loc
+    print(['explorer', str(loc)])
+    subprocess.Popen(['explorer', str(loc)])
+
 run()
 
+    # movedTo = ""   
+if(os.name=='nt'):
+    from win10toast_click import ToastNotifier 
+    toaster = ToastNotifier()
+    # toaster.show_toast("Directory Sorter", "done sorta")
+
+    toaster.show_toast(
+        "Directory Sorter",  # title
+        "Done Sorting!",  # message
+        icon_path=None,  # 'icon_path'
+        duration=5,  # for how many seconds toast should be visible; None = leave notification in Notification Center
+        threaded=True,  # True = run other code in parallel; False = code execution will wait till notification disappears
+        callback_on_click=open_path  # click notification to run function
+    )
+ 
+
+
+    # if movedTo:
+    #toaster.show_toast("Directory Sorter", "File was moved to: "+ movedTo)
+    
