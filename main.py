@@ -13,11 +13,11 @@ args, leftovers = parser.parse_known_args()
 
 
 docs = ['.pdf','.docx','.doc','.pptx','.ppt','.pps','.odp','.rtf'] 
-data = ['.csv','.txt','.json','.yaml','.xlsx','.xls','.xlsm','.sql','.html','.data','.xml','.cfg', '.log']
+data = ['.csv','.txt','.json','.yaml','.xlsx','.xls','.xlsm','.sql','.html','.data','.xml','.cfg', '.log', '.bib']
 media = ['.png','.jpg','.mp3','.mp4','.m4v','.mkv','.swf','.flv','.avi','.gif','.wav','.webm','.bmp','.jpeg','.ico','.ps','.psd','.svg']
-archives = ['.zip', '.xz', '.rar', '.7z', '.iso', '.tar']
-executables = ['.exe', '.msi', '.jar', '.bat', '.torrent', '.apk', '.bin']
-code = ['.ipynb', '.py', '.js', '.c', '.cpp', '.h','.lua', '.class', '.java', '.php', '.vb', '.html', '.css', '.svelte']
+archives = ['.zip', '.xz', '.rar', '.7z', '.iso', '.tar', '.gz']
+executables = ['.exe', '.msi', '.jar', '.bat', '.torrent', '.apk', '.bin', '.deb', '.AppImage', '.dmg', '.pkg', '.rpm', '.run', '.sh', '.msi', '.msix', '.msixbundle']
+code = ['.ipynb', '.py', '.js', '.c', '.cpp', '.h','.lua', '.class', '.java', '.php', '.vb', '.html', '.css', '.svelte', '.ts', '.tsx', '.go', '.rb', '.rs', '.swift', '.kt', '.kts', '.dart', '.asm', '.asmx', '.aspx', '.cs', '.cshtml', '.csproj', '.csx', '.fs', '.fsx', '.vb', '.vbhtml', '.vbproj', '.vbs', '.xaml', '.xaml.cs', '.xaml.vb', '.xaml.csproj', '.xaml.vbproj', '.xaml.csproj.user', '.xaml.vbproj.user', '.xaml.csproj.vspscc', '.xaml.vbproj.vspscc', '.xaml.csproj.vspscc.bak', '.xaml.vbproj.vspscc.bak', '.xaml.csproj.user.bak', '.xaml.vbproj.user.bak', '.xaml.csproj.user.vspscc', '.xaml.vbproj.user.vspscc', '.xaml.csproj.user.vspscc.bak', '.xaml.vbproj.user.vspscc.bak', '.xaml.csproj.vspscc', '.xaml.vbproj.vspscc', '.xaml.csproj.vspscc.bak', '.xaml.vbproj.vspscc.bak', '.xaml.csproj.user', '.xaml.vbproj.user', '.xaml.csproj.user.bak', '.xaml.vbproj.user.bak', '.xaml.csproj.user.vspscc', '.xaml.vbproj.user.vspscc', '.xaml.csproj.user.vspscc.bak', '.xaml.vbproj.user.vspscc.bak', '.xaml.csproj.vspscc', '.xaml.vbproj.vspscc', '.xaml.csproj.vspscc.bak', '.xaml.vbproj.vspscc.bak', '.xaml.csproj.user', '.xaml.vbproj.user', '.xaml.csproj.user.bak', '.xaml.vbproj.user.bak', '.xaml.csproj.user.vspscc', '.xaml.vbproj.user.vspscc', '.xaml.csproj.user.vspscc.bak', '.xaml.vbproj.user.vspscc.bak', '.xaml.csproj.vspscc', '.xaml.vbproj.vspscc', '.xaml.csproj.vspscc.bak']
 
 structure = ['Documents','Data','Media','Archives','Executables','Coding','Other']
 ignore = ['Torrents']#whole file -> name+ext
@@ -68,7 +68,6 @@ def sort():
         shutil.move(file, dest)
         # movedTo = dest
         # print(f'set movedto to: {movedTo}')
-        print('os name is:',os.name)
         if(os.name == 'nt'):
             # print('nt')
             # if movedTo != "":
